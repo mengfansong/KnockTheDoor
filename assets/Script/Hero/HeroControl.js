@@ -14,8 +14,38 @@ cc.Class({
     properties: {        
         direction: 0,  //0,1,2,3  stayl,stayr, left,right         
         speed:0,
+        knifeSkill:{
+            default:null,
+            type:cc.Node,
+        },
+        knifePrefabL:{
+          default:null,
+          type:cc.Prefab  
+        },
+        knifePrefabR:{
+            default:null,
+            type:cc.Prefab  
+          },
+        root:cc.Node,
     },
 
+
+    // 向左投掷飞镖
+    playKnifeLeft:function() {       
+        var knife = cc.instantiate(this.knifePrefabL);        
+        knife.x = this.node.x-64;
+        knife.y = this.node.y+64;        
+        this.root.addChild(knife);
+    },
+
+    // 向右投掷飞镖
+    playKnifeRight:function() {        
+        var knife = cc.instantiate(this.knifePrefabR);        
+        knife.x = this.node.x+64;
+        knife.y = this.node.y+64;        
+        this.root.addChild(knife);
+    },
+    
     // use this for initialization
     onLoad: function () {     
 
@@ -25,9 +55,11 @@ cc.Class({
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
         this.anim = this.getComponent(cc.Animation);
-
+        
        
-    },
+    }, 
+
+    
 
     onDestroy () {
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
@@ -54,16 +86,24 @@ cc.Class({
                 this.direction = 3;                
                 break;
             case cc.macro.KEY.j:
-                if(this.direction == 0 || this.direction == 2) {
-                    this.anim.play("h attack left");                    
+                if(this.direction == 0 || this.direction == 2) {                    
+                    if(this.knifeSkill.active == true) {
+                        this.anim.play("h attack left");
+                        this.playKnifeLeft();                        
+                    }                    
                 } 
-                if(this.direction == 1 || this.direction == 3) {
-                    this.anim.play("h attack right");                    
+                if(this.direction == 1 || this.direction == 3) {                       
+                    if(this.knifeSkill.active == true) {
+                        this.anim.play("h attack right");
+                        this.playKnifeRight();                       
+                    }                 
                 }                               
                 break;                    
             
         }
     },
+
+    
 
     onKeyUp: function (event) {
         switch(event.keyCode) {
