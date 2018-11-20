@@ -27,13 +27,18 @@ cc.Class({
             type:cc.Prefab  
           },
         root:cc.Node,
-
         speed: cc.v2(0, 0),
         maxSpeed: cc.v2(2000, 2000),
         gravity: -1000,  //重力
         drag: 1000,
         direction: 0,
-        jumpSpeed: 300
+        jumpSpeed: 300,
+        _ammo:0,  //飞刀数量
+        ammoCount: {
+            default:null,
+            type:cc.Label
+        }
+
     },
 
 
@@ -113,15 +118,19 @@ cc.Class({
                 break;
             case cc.macro.KEY.j:
                 if(this.myDirection == 0 || this.myDirection == 2) {                    
-                    if(this.knifeSkill.active == true) {
+                    if(this.knifeSkill.active == true && this._ammo > 0) {
                         this.anim.play("h attack left");
-                        this.playKnifeLeft();                        
+                        this.playKnifeLeft();
+                        this._ammo--;  
+                        this.ammoCount.string = this._ammo;                      
                     }                    
                 } 
                 if(this.myDirection == 1 || this.myDirection == 3) {                       
-                    if(this.knifeSkill.active == true) {
+                    if(this.knifeSkill.active == true && this._ammo > 0) {
                         this.anim.play("h attack right");
-                        this.playKnifeRight();                       
+                        this.playKnifeRight();                
+                        this._ammo--;    
+                        this.ammoCount.string = this._ammo;    
                     }                 
                 }                               
                 break;                    
@@ -208,7 +217,13 @@ cc.Class({
                 this.speed.y = 0;
                 other.touchingY = true;
             }         
-        }            
+        }           
+        //捡到飞刀
+        if (other.node.group === 'item') {
+            //this.ammo += 10;    //飞刀数量**********************
+            this._ammo += 10;
+            this.ammoCount.string = this._ammo;         
+        }
     },
     
     onCollisionStay: function (other, self) {
