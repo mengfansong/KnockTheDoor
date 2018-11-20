@@ -13,7 +13,7 @@ cc.Class({
 
     properties: {
         
-        speed:100
+        speed:800
     },
 
     // LIFE-CYCLE CALLBACKS:
