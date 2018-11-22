@@ -3,7 +3,7 @@
   "_name": "h attack right",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.3,
+  "_duration": 0.4,
   "sample": 10,
   "speed": 1,
   "wrapMode": 1,
@@ -27,6 +27,12 @@
             "frame": 0.2,
             "value": {
               "__uuid__": "660c6e38-ef1f-4c33-81c3-bd9e1c67aa04"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "b6d2de82-d6fa-4555-9302-dd624eb7d80c"
             }
           }
         ]

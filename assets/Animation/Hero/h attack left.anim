@@ -3,7 +3,7 @@
   "_name": "h attack left",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.3,
+  "_duration": 0.4,
   "sample": 10,
   "speed": 1,
   "wrapMode": 1,
@@ -27,6 +27,12 @@
             "frame": 0.2,
             "value": {
               "__uuid__": "d7fc915a-a905-4136-a16a-2261b4c942ec"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "51f6b9aa-f8db-4026-8ef0-358835047b46"
             }
           }
         ]

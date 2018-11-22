@@ -12,24 +12,33 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        hero:{
-            default:null,
-            type:cc.Node
-        }
+        // foo: {
+        //     // ATTRIBUTES:
+        //     default: null,        // The default value will be used only when the component attaching
+        //                           // to a node for the first time
+        //     type: cc.SpriteFrame, // optional, default is typeof default
+        //     serializable: true,   // optional, default is true
+        // },
+        // bar: {
+        //     get () {
+        //         return this._bar;
+        //     },
+        //     set (value) {
+        //         this._bar = value;
+        //     }
+        // },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        var seq = cc.repeatForever(
+            cc.sequence(
+                cc.moveBy(2, 20, 0),
+                cc.moveBy(2, -20, 0)
+            ));
+        this.node.runAction(seq);
     },
-
-    onDisable: function () {
-        cc.director.getCollisionManager().enabled = false;
-        cc.director.getCollisionManager().enabledDebugDraw = false;
-    },
-
 
     start () {
 

@@ -37,8 +37,17 @@ cc.Class({
         ammoCount: {
             default:null,
             type:cc.Label
-        }
-
+        },
+        _lifes:3, //生命值
+        lifesShow:{  //生命值的显示。
+            default:null,
+            type:cc.Label,
+        },
+        money:0, //金钱
+        moneyShow:{ //金钱显示
+            default:null, 
+            type:cc.Label,
+        },
     },
 
 
@@ -78,6 +87,9 @@ cc.Class({
 
         // 接触数量？
         this.touchingNumber = 0;
+
+        this.ammoCount.string = this._ammo;  
+        this.moneyShow.string = this.money;
        
     }, 
 
@@ -161,8 +173,9 @@ cc.Class({
 
     // 碰撞时
     onCollisionEnter: function (other, self) {
+        //与平台
         if (other.node.group === 'Platform') {
-            this.node.color = cc.Color.RED;  //碰撞开始，变红
+
             this.touchingNumber ++;  //留意
         
             // 1st step 
@@ -217,12 +230,13 @@ cc.Class({
                 this.speed.y = 0;
                 other.touchingY = true;
             }         
-        }           
-        //捡到飞刀
-        if (other.node.group === 'item') {
-            //this.ammo += 10;    //飞刀数量**********************
-            this._ammo += 10;
-            this.ammoCount.string = this._ammo;         
+        }
+
+        
+
+        // 被怪物碰到
+        if (other.node.group === 'monster') {
+            this.lifesShow.string = this._lifes;
         }
     },
     
@@ -258,7 +272,7 @@ cc.Class({
     onCollisionExit: function (other) {
         this.touchingNumber --;  //离开就会减碰撞数，吃道具也会减。
         if (this.touchingNumber === 0) {
-            this.node.color = cc.Color.WHITE;
+            // this.node.color = cc.Color.WHITE;
         }
 
         if (other.touchingX) {
@@ -269,6 +283,18 @@ cc.Class({
             other.touchingY = false;
             this.collisionY = 0;
             this.jumping = true;
+        }
+
+        //捡到道具
+        if (other.node.group === 'item') {
+            
+           
+            //飞刀数量**********************
+          
+            this.ammoCount.string = this._ammo;  
+            this.moneyShow.string = this.money;
+            // this.knifeSkill.active =true;
+            // other.node.destroy();       
         }
     },
     

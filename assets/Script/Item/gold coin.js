@@ -12,34 +12,31 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        knifeSkill:{
-            default:null,
-            type:cc.Node
-        },        
+        type:"goldn coin",
     },
 
-
-    onLoad: function () {
-    
-
-    },
-   
-    
-    
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
-
-    start () {
-
+    onLoad () {
+        var seq = cc.repeatForever(
+            cc.sequence(
+                cc.moveBy(1, 0, 20),
+                cc.moveBy(1, 0, -20)
+            ));
+        this.node.runAction(seq);
     },
 
     onCollisionEnter: function (other, self) {
-        
-        this.knifeSkill.active =true;
-        this.node.destroy();
-        
-    },
+        if (other.node.group === 'hero') {    
+            //other是英雄
+            var hero = other.node.getComponent("HeroControl");
+            hero.money += 10;
+            this.node.destroy();
+           
+            
 
+        }
+    }
+        
     // update (dt) {},
 });

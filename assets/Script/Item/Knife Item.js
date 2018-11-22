@@ -12,28 +12,36 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        hero:{
-            default:null,
-            type:cc.Node
-        }
+        type:"knife",
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        var seq = cc.repeatForever(
+            cc.sequence(
+                cc.moveBy(1, 0, 20),
+                cc.moveBy(1, 0, -20)
+            ));
+        this.node.runAction(seq);
+        
     },
-
-    onDisable: function () {
-        cc.director.getCollisionManager().enabled = false;
-        cc.director.getCollisionManager().enabledDebugDraw = false;
-    },
-
 
     start () {
 
     },
+
+    onCollisionEnter: function (other, self) {
+        if (other.node.group === 'hero') {    
+            //other是英雄
+            var hero = other.node.getComponent("HeroControl");
+            hero._ammo += 10;
+                  
+            hero.knifeSkill.active =true;    
+            this.node.destroy();
+
+        }
+    }
 
     // update (dt) {},
 });

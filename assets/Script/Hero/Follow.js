@@ -16,7 +16,8 @@ cc.Class({
         target: {
             default: null,
             type: cc.Node
-        }
+        },
+        top_right:0
     },
 
     // use this for initialization
@@ -27,7 +28,7 @@ cc.Class({
         if (!this.target) {
             return;
         }
-        var follow = cc.follow(this.target, cc.rect(0,0, 2000,2000));
+        var follow = cc.follow(this.target, cc.rect(0,0, this.top_right,2000));
         this.node.runAction(follow);
     }
 });
